@@ -1,9 +1,6 @@
 'use client'
-
-import Image from "next/image";
 import Button from "./Button";
 import SocialLinks from "./SocialLinks";
-import { Person } from "../../public/images";
 import Link from "next/link";
 import { useLanguage } from "./LanguageContext";
 
@@ -100,10 +97,10 @@ export default function HeroSection() {
               </div>
 
               <div className="pl-4 text-zinc-400 space-y-1 border-l border-zinc-800">
-                <p><span className="text-cyan-400">"{t("hero.termStatus")}":</span> "{t("hero.termStatusVal")}"</p>
-                <p><span className="text-cyan-400">"{t("hero.termFocus")}":</span> ["Computer Vision", "Otonom Boat Control", "AI Integrations"]</p>
-                <p><span className="text-cyan-400">"{t("hero.termAffil")}":</span> ["Apple Academy Alumni", "Google Student Ambassador"]</p>
-                <p><span className="text-cyan-400">"{t("hero.termLang")}":</span> ["Swift", "Python", "C++", "Java"]</p>
+                <p><span className="text-cyan-400">&quot;{t("hero.termStatus")}&quot;:</span> &quot;{t("hero.termStatusVal")}&quot;</p>
+                <p><span className="text-cyan-400">&quot;{t("hero.termFocus")}&quot;:</span> [&quot;Computer Vision&quot;, &quot;Otonom Boat Control&quot;, &quot;AI Integrations&quot;]</p>
+                <p><span className="text-cyan-400">&quot;{t("hero.termAffil")}&quot;:</span> [&quot;Apple Academy Alumni&quot;, &quot;Google Student Ambassador&quot;]</p>
+                <p><span className="text-cyan-400">&quot;{t("hero.termLang")}&quot;:</span> [&quot;Swift&quot;, &quot;Python&quot;, &quot;C++&quot;, &quot;Java&quot;]</p>
               </div>
 
               <div className="flex items-center space-x-2 pt-2">

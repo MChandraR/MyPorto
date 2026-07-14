@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 type PortfolioItem = {
   title: string;
@@ -88,7 +88,7 @@ export default function Portfolio() {
                   <FaExternalLinkAlt size={12} />
                 </span>
               </div>
-              
+
               <div className="space-y-2">
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {it.title}
