@@ -4,90 +4,99 @@ import { Person } from "../../public/images";
 import Link from "next/link";
 
 const highlights = [
-  { title: "Focus", value: "Software & AI Engineering" },
-  { title: "Approach", value: "Innovative & Problem-solving" },
-  { title: "Current", value: "Apple Academy & GSA 2025" },
+  { title: "Research & Systems", value: "Computer Vision & IoT" },
+  { title: "Applied AI / ML", value: "PyTorch & CoreML models" },
+  { title: "Next-gen Apps", value: "Swift, Python, & C++ Control" },
 ];
 
-const specialties = [
-  "Swift, Python, C++ & Java",
-  "Autonomous navigation & vision systems",
-  "On-device machine learning & AI",
-  "IoT & hardware-software control",
+const techStack = [
+  "Swift / SwiftUI",
+  "Python (PyTorch / Flask)",
+  "C++ (Arduino / ROS)",
+  "Java",
+  "IoT & Microcontrollers",
+  "Computer Vision & GPS Navigation",
 ];
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative overflow-hidden rounded-3xl border border-gray-100 bg-white/80 px-6 py-16 shadow-xl shadow-blue-100/30 backdrop-blur-lg md:px-12">
-      <div className="absolute inset-y-0 right-0 hidden w-1/2 translate-x-32 bg-gradient-to-bl from-blue-50 via-white to-blue-100 blur-3xl md:block" />
+    <section id="about" className="relative overflow-hidden rounded-2xl border border-zinc-200/50 dark:border-zinc-800/80 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-md px-6 py-16 transition-all duration-300 md:px-12">
+      <div className="absolute top-0 right-0 -z-10 h-64 w-64 rounded-full bg-indigo-400/5 dark:bg-indigo-500/5 blur-3xl" />
 
-      <div className="relative z-10 grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div className="relative z-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         {/* Content */}
-        <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
-            About
-          </p>
-          <h2 className="mt-4 text-3xl font-semibold text-gray-900 md:text-4xl">
-            I’m Muhammad Chandra Ramadhan—a Software Engineer focused on AI, autonomous systems, and building real-world solutions.
-          </h2>
+        <div className="space-y-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400">
+              About Me
+            </p>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">
+              Engineering autonomous systems & data-informed solutions.
+            </h2>
+          </div>
 
-          <p className="mt-6 text-lg leading-relaxed text-gray-600">
-            I am an Informatics Engineering student at Universitas Maritim Raja Ali Haji. My experience ranges from developing smart systems using C++ and Swift, to building machine learning models in Python, and integrating hardware/software control. As an Apple Developer Academy Graduate (Cohort 2025) and Google Student Ambassador 2025, I thrive in fast-paced startup and research ecosystems.
+          <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400 transition-colors">
+            I am a Software and Machine Learning Engineer currently studying Informatics Engineering 
+            at Universitas Maritim Raja Ali Haji. Active as a Google Student Ambassador 2025 and 
+            an Apple Developer Academy Graduate (Cohort 2025), I love developing real-world, 
+            intelligent systems from autonomous boat controllers to server-side AI applications.
           </p>
 
-          <div className="mt-8 grid gap-4 rounded-2xl border border-gray-100 bg-gray-50 px-6 py-4 sm:grid-cols-3 sm:gap-6">
+          {/* Highlights Grid */}
+          <div className="grid gap-4 rounded-xl border border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/20 p-6 sm:grid-cols-3 transition-colors">
             {highlights.map(({ title, value }) => (
-              <div key={title}>
-                <p className="text-xs uppercase tracking-[0.25em] text-gray-400">
+              <div key={title} className="space-y-1">
+                <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   {title}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-gray-800">
+                <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 transition-colors">
                   {value}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-gray-800">
-                What I’m doubling down on
-              </p>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {specialties.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center text-sm text-gray-600"
-                  >
-                    <span className="mr-2 inline-block h-2 w-2 rounded-full bg-blue-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+          {/* Tech Stack List */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-[0.1em] transition-colors">
+              Core Technologies & Frameworks
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-zinc-200/50 dark:border-zinc-800/80 bg-zinc-100/55 dark:bg-zinc-900/40 px-3.5 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-all"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
+          </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-              <Link href="https://www.linkedin.com/in/mchandrar/">
-                <Button variant="primary">Let’s Collaborate</Button>
-              </Link>
-            </div>
+          <div className="pt-4">
+            <Link href="https://www.linkedin.com/in/mchandrar/" target="_blank" rel="noreferrer">
+              <Button variant="primary">Let’s Collaborate</Button>
+            </Link>
           </div>
         </div>
 
-        {/* Image */}
-        <div className="relative mx-auto max-w-xs rounded-[2.5rem] border border-gray-100 bg-white p-5 shadow-2xl shadow-blue-200 md:max-w-sm">
-          <div className="absolute -inset-4 -z-10 rounded-[3rem] bg-gradient-to-r from-blue-100 via-white to-blue-200 opacity-80 blur-2xl" />
-          <Image
-            src={Person}
-            alt="Portrait of Muhammad Chandra Ramadhan"
-            width={480}
-            height={640}
-            className="rounded-[2rem] object-cover"
-            priority
-          />
+        {/* Profile Image (Sleek Grayscale Hover Effect) */}
+        <div className="relative mx-auto w-full max-w-xs lg:max-w-sm">
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 opacity-20 blur-xl dark:opacity-10" />
+          <div className="relative overflow-hidden rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3 shadow-2xl transition-all duration-300">
+            <div className="overflow-hidden rounded-xl grayscale hover:grayscale-0 transition-all duration-500">
+              <Image
+                src={Person}
+                alt="Muhammad Chandra Ramadhan"
+                width={480}
+                height={640}
+                className="object-cover w-full h-auto"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

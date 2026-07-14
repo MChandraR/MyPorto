@@ -5,11 +5,14 @@ import Portfolio from "./components/Portfolio";
 
 export default function Home() {
   return (
-     <main className="max-w-5xl mx-auto px-4 py-8 space-y-24">
+    <main className="min-h-screen">
       <HeroSection />
-      <AboutSection />
-      <Portfolio />
+      <div className="max-w-5xl mx-auto px-6 py-16 space-y-20">
+        <AboutSection />
+        <Portfolio />
+      </div>
     </main>
   );
 }
+
 
