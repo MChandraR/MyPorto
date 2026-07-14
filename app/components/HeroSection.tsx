@@ -45,7 +45,7 @@ export default function HeroSection() {
             <Link href="https://www.linkedin.com/in/mchandrar/" target="_blank" rel="noreferrer">
               <Button variant="primary">Get in Touch</Button>
             </Link>
-            <Link href="#portfolio">
+            <Link href="/portfolio">
               <Button variant="outline">View Portfolio</Button>
             </Link>
           </div>

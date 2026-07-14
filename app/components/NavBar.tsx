@@ -32,9 +32,9 @@ export default function NavBar() {
   };
 
   const menuItems = [
-    { label: "Home", href: "#hero" },
-    { label: "About", href: "#about" },
-    { label: "Portfolio", href: "#portfolio" },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/#about" },
+    { label: "Portfolio", href: "/portfolio" },
   ];
 
   return (
@@ -42,7 +42,7 @@ export default function NavBar() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Brand Name */}
-          <Link href="#hero" className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <Link href="/" className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             Chandra.MCR
           </Link>
 
