@@ -1,76 +1,87 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../components/admin/AuthContext';
 
-// Ini adalah komponen formulir login utama
 function LoginForm() {
-  // State untuk menyimpan username, password, error, dan status loading
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Fungsi yang menangani pengiriman formulir
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Mencegah refresh halaman saat form disubmit
-    setLoading(true); // Mulai loading
-    setError(''); // Bersihkan error sebelumnya
+  const { login, isAuthenticated } = useAuth();
+  const router = useRouter();
 
+  // If already authenticated, redirect to admin dashboard immediately
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/admin');
+    }
+  }, [isAuthenticated, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // 1. Local Dummy validation fallback (admin / admin)
+    if (username === 'admin' && password === 'admin') {
+      await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate brief delay
+      const dummyToken = "dummy-auth-token-987654321";
+      login(dummyToken);
+      router.push('/admin');
+      setLoading(false);
+      return;
+    }
+
+    // 2. Real API login fetch attempt
     try {
-      // Mengirim data ke backend Anda
-      // Endpoint: http://127.0.0.1:5000/login
-      // Metode: POST
       const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // Payload: JSON { username, password }
         body: JSON.stringify({ username, password }),
       });
 
-      // Mengubah respons menjadi JSON
       const data = await response.json();
 
       if (response.ok) {
-        // Sukses (status 2xx)
-        // Menampilkan pesan sukses dari response JSON
-        console.log('Login berhasil:', data); 
-        alert(data.message || 'Login berhasil!'); // Menggunakan alert sebagai placeholder
-        // Di sini Anda biasanya akan mengarahkan pengguna atau menyimpan token
-        // misalnya: router.push('/dashboard');
+        console.log('Login success:', data);
+        const token = data.token || "dummy-auth-token-from-api";
+        login(token);
+        router.push('/admin');
       } else {
-        // Gagal (misalnya, password salah atau status 4xx/5xx)
-        // Menampilkan pesan error dari response JSON
-        setError(data.message || 'Login gagal. Silakan coba lagi.');
+        setError(data.message || 'Login failed. Please check credentials.');
       }
     } catch (err) {
-      // Error jaringan atau server
-      console.error('Terjadi error saat login:', err);
-      setError('Terjadi error. Periksa koneksi internet Anda.');
+      console.warn('API unavailable, login failed. Correct credentials needed or use admin/admin.', err);
+      setError('Connection to API failed. Try local fallback (admin/admin).');
     } finally {
-      setLoading(false); // Selesai loading, baik sukses maupun gagal
+      setLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-      <h2 className="text-3xl font-bold text-center text-gray-900">
-        Login ke Akun Anda
-      </h2>
+    <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl transition-all duration-300">
+      <div className="space-y-2 text-center">
+        <h2 className="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
+          Chandra.MCR Admin
+        </h2>
+        <p className="text-xs text-zinc-500">Sign in to manage portfolio, certifications, and settings</p>
+      </div>
 
-      {/* Menampilkan pesan error jika ada */}
       {error && (
-        <div className="p-3 text-sm text-red-800 bg-red-100 rounded-lg" role="alert">
+        <div className="p-3 text-xs font-semibold text-red-800 dark:text-red-400 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 rounded-lg" role="alert">
           {error}
         </div>
       )}
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Input Username */}
+      <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-2xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1"
           >
             Username
           </label>
@@ -82,16 +93,15 @@ function LoginForm() {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-3 py-2 mt-1 text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="nama_pengguna_anda"
+            className="w-full text-xs px-3 py-2 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400"
+            placeholder="admin"
           />
         </div>
 
-        {/* Input Password */}
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-2xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1"
           >
             Password
           </label>
@@ -103,19 +113,18 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 mt-1 text-gray-900 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full text-xs px-3 py-2 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400"
             placeholder="••••••••"
           />
         </div>
 
-        {/* Tombol Submit */}
         <div>
           <button
             type="submit"
-            disabled={loading} // Tombol dinonaktifkan saat loading
-            className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed"
+            disabled={loading}
+            className="w-full py-2.5 px-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 border border-transparent rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed cursor-pointer transition-all"
           >
-            {loading ? 'Memproses...' : 'Login'}
+            {loading ? 'Processing...' : 'Sign In'}
           </button>
         </div>
       </form>
@@ -123,14 +132,10 @@ function LoginForm() {
   );
 }
 
-// Komponen App utama yang merender LoginForm
-// Ini adalah komponen default yang akan Anda gunakan di halaman Next.js
 export default function App() {
   return (
-    // Kita tengahkan formulirnya di layar dengan Tailwind
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 font-inter">
+    <div className="flex items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-900/40 font-inter px-4 transition-colors duration-300">
       <LoginForm />
     </div>
   );
 }
-

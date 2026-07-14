@@ -1,5 +1,7 @@
+
 import Link from "next/link";
 import { FaHome, FaBriefcase, FaGraduationCap, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from '../../components/admin/AuthContext';
 
 interface SidebarProps {
   activeTab: string;
@@ -7,6 +9,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
+  const { isAuthenticated, token, loading, login, logout, checkSessionWithAPI } = useAuth();
+
   const menuItems = [
     { id: "overview", label: "Overview", icon: <FaHome size={18} /> },
     { id: "projects", label: "Projects", icon: <FaBriefcase size={18} /> },
@@ -36,11 +40,10 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-sm dark:bg-blue-500"
-                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900/50 hover:text-zinc-900 dark:hover:text-zinc-100"
-                }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 cursor-pointer ${isActive
+                  ? "bg-blue-600 text-white shadow-sm dark:bg-blue-500"
+                  : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900/50 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  }`}
               >
                 {item.icon}
                 <span>{item.label}</span>
@@ -53,6 +56,7 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
       {/* Bottom Section */}
       <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">
         <Link
+          onClick={() => { logout() }}
           href="/"
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-zinc-650 dark:text-zinc-450 hover:bg-zinc-100 dark:hover:bg-zinc-900/50 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all duration-300"
         >

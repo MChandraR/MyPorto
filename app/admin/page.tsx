@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { FaBriefcase, FaGraduationCap, FaCode, FaAward, FaExternalLinkAlt } from "react-icons/fa";
 import Sidebar from "../components/admin/Sidebar";
 import Header from "../components/admin/Header";
@@ -8,11 +9,44 @@ import StatCard from "../components/admin/StatCard";
 import ProjectsTab from "../components/admin/ProjectsTab";
 import CertificationsTab from "../components/admin/CertificationsTab";
 import ProfileTab from "../components/admin/ProfileTab";
+import { useAuth } from "../components/admin/AuthContext";
 import { projects } from "../data/projects";
 import { certifications } from "../data/certifications";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<string>("overview");
+  const { isAuthenticated, loading, token, checkSessionWithAPI } = useAuth();
+  const router = useRouter();
+
+  // Route protection redirect
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [loading, isAuthenticated, router]);
+
+  // Session check placeholder triggered on refresh / route (tab) changes
+  useEffect(() => {
+    if (isAuthenticated && token) {
+      console.log(`[Admin Route Guard] Checking session validity with API for tab change: /admin#${activeTab}`);
+      checkSessionWithAPI(token);
+    }
+  }, [activeTab, isAuthenticated, token, checkSessionWithAPI]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300 font-inter">
+        <div className="relative flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-zinc-200 border-t-blue-600 dark:border-zinc-800 dark:border-t-blue-400" />
+        </div>
+        <p className="mt-4 text-xs font-semibold text-zinc-500 animate-pulse">Initializing admin session...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null; // Don't render dashboard if redirecting
+  }
 
   const renderTabContent = () => {
     switch (activeTab) {
