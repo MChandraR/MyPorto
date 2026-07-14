@@ -1,16 +1,21 @@
+'use client'
+
 import Image from "next/image";
 import Button from "./Button";
 import SocialLinks from "./SocialLinks";
 import { Person } from "../../public/images";
 import Link from "next/link";
-
-const heroStats = [
-  { label: "Apple Dev Certified", value: "Cohort 2025" },
-  { label: "Google Student Ambassador", value: "2025" },
-  { label: "GitHub Repositories", value: "55+" },
-];
+import { useLanguage } from "./LanguageContext";
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
+  const heroStats = [
+    { label: t("hero.stat1Label"), value: t("hero.stat1Val") },
+    { label: t("hero.stat2Label"), value: t("hero.stat2Val") },
+    { label: t("hero.stat3Label"), value: t("hero.stat3Val") },
+  ];
+
   return (
     <section id="hero" className="relative grid-bg overflow-hidden border-b border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 px-6 py-20 md:px-16 transition-colors duration-300">
       {/* Decorative Glows */}
@@ -25,7 +30,7 @@ export default function HeroSection() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            Software & ML/AI Engineer
+            {t("hero.tag")}
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl md:text-6xl">
@@ -36,17 +41,16 @@ export default function HeroSection() {
           </h1>
 
           <p className="max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400 transition-colors">
-            Building data-driven systems, on-device intelligence, and autonomous navigation.
-            Blending native software engineering with applied machine learning to build highly responsive, intelligent experiences.
+            {t("hero.description")}
           </p>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-2">
             <Link href="https://www.linkedin.com/in/mchandrar/" target="_blank" rel="noreferrer">
-              <Button variant="primary">Get in Touch</Button>
+              <Button variant="primary">{t("hero.btnTouch")}</Button>
             </Link>
             <Link href="/portfolio">
-              <Button variant="outline">View Portfolio</Button>
+              <Button variant="outline">{t("hero.btnPortfolio")}</Button>
             </Link>
           </div>
 
@@ -96,10 +100,10 @@ export default function HeroSection() {
               </div>
 
               <div className="pl-4 text-zinc-400 space-y-1 border-l border-zinc-800">
-                <p><span className="text-cyan-400">"status":</span> "Active & Building"</p>
-                <p><span className="text-cyan-400">"focus":</span> ["Computer Vision", "Otonom Boat Control", "AI Integrations"]</p>
-                <p><span className="text-cyan-400">"affiliations":</span> ["Apple Academy Alumni", "Google Student Ambassador"]</p>
-                <p><span className="text-cyan-400">"languages":</span> ["Swift", "Python", "C++", "Java"]</p>
+                <p><span className="text-cyan-400">"{t("hero.termStatus")}":</span> "{t("hero.termStatusVal")}"</p>
+                <p><span className="text-cyan-400">"{t("hero.termFocus")}":</span> ["Computer Vision", "Otonom Boat Control", "AI Integrations"]</p>
+                <p><span className="text-cyan-400">"{t("hero.termAffil")}":</span> ["Apple Academy Alumni", "Google Student Ambassador"]</p>
+                <p><span className="text-cyan-400">"{t("hero.termLang")}":</span> ["Swift", "Python", "C++", "Java"]</p>
               </div>
 
               <div className="flex items-center space-x-2 pt-2">
@@ -108,7 +112,7 @@ export default function HeroSection() {
               </div>
 
               <div className="text-green-400 pl-4 animate-pulse">
-                [SUCCESS] GPS Navigation & Sensor-based Vision systems active.
+                {t("hero.termSuccess")}
               </div>
             </div>
           </div>

@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin, FaSun, FaMoon } from "react-icons/fa";
+import { useLanguage } from "./LanguageContext";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState("light");
+  const { language, toggleLanguage, t } = useLanguage();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -32,20 +34,34 @@ export default function NavBar() {
   };
 
   const menuItems = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Certifications", href: "/certifications" },
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.about"), href: "/about" },
+    { label: t("nav.portfolio"), href: "/portfolio" },
+    { label: t("nav.certifications"), href: "/certifications" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-md transition-colors duration-300">
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo / Brand Name */}
-          <Link href="/" className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            Chandra.MCR
-          </Link>
+          {/* Top-Left Area: Language Switcher + Brand */}
+          <div className="flex items-center space-x-4">
+            {/* Language Switcher Pill */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-900/60 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all border border-zinc-200/50 dark:border-zinc-800/80 cursor-pointer"
+              aria-label="Toggle Language"
+            >
+              <span className={language === "en" ? "text-blue-600 dark:text-blue-400" : "text-zinc-400"}>EN</span>
+              <span className="text-zinc-300 dark:text-zinc-700">|</span>
+              <span className={language === "id" ? "text-blue-600 dark:text-blue-400" : "text-zinc-400"}>ID</span>
+            </button>
+
+            {/* Logo / Brand Name */}
+            {/* <Link href="/" className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              Chandra.MCR
+            </Link> */}
+          </div>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
@@ -98,7 +114,7 @@ export default function NavBar() {
             >
               {theme === "dark" ? <FaSun size={18} /> : <FaMoon size={18} />}
             </button>
-            
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 focus:outline-none cursor-pointer"
