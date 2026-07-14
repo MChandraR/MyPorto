@@ -1,4 +1,4 @@
-import Person from "./profle.png"
+import Person from "./profile.png"
 import City from "./city.jpg"
 
 export {Person, City }
