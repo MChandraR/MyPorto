@@ -24,19 +24,9 @@ function LoginForm() {
     setLoading(true);
     setError('');
 
-    // 1. Local Dummy validation fallback (admin / admin)
-    if (username === 'admin' && password === 'admin') {
-      await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate brief delay
-      const dummyToken = "dummy-auth-token-987654321";
-      login(dummyToken);
-      router.push('/admin');
-      setLoading(false);
-      return;
-    }
-
-    // 2. Real API login fetch attempt
+    // Fetch the internal Next.js API route that connects to MongoDB Atlas
     try {
-      const response = await fetch('http://127.0.0.1:5000/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,15 +38,14 @@ function LoginForm() {
 
       if (response.ok) {
         console.log('Login success:', data);
-        const token = data.token || "dummy-auth-token-from-api";
-        login(token);
+        login(data.token);
         router.push('/admin');
       } else {
         setError(data.message || 'Login failed. Please check credentials.');
       }
     } catch (err) {
-      console.warn('API unavailable, login failed. Correct credentials needed or use admin/admin.', err);
-      setError('Connection to API failed. Try local fallback (admin/admin).');
+      console.error('API login request failed:', err);
+      setError('Connection to backend failed. Please try again later.');
     } finally {
       setLoading(false);
     }
