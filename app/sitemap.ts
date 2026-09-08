@@ -2,7 +2,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://domainbaru.com' // ganti dengan domain barumu
+  const baseUrl = 'https://mchandrar.com' // ganti dengan domain barumu
 
   return [
     {
