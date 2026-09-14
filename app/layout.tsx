@@ -14,11 +14,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-}); 
+});
 
 export const metadata: Metadata = {
   title: "Muhammad Chandra Ramadhan | Software & ML Engineer",
   description: "Personal portfolio of Muhammad Chandra Ramadhan, a Software and Machine Learning Engineer. Apple Developer Academy Graduate (Cohort 2025) and Google Student Ambassador 2025.",
+  alternates: {
+    canonical: "https://www.mchandrar.com/",
+  },
 };
 
 export default function RootLayout({
