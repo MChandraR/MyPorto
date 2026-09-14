@@ -25,6 +25,17 @@ export const metadata: Metadata = {
   },
 };
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Muhammad Chandra Ramadhan",
+  "url": "https://mchandrar.com",
+  "sameAs": [
+    "https://github.com/MChandraR",
+    "https://www.linkedin.com/in/mchandrar/",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,6 +44,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
