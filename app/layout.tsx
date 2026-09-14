@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 import AIParticles from "./components/AIParticles";
 import { LanguageProvider } from "./components/LanguageContext";
+import { AuthProvider } from "./components/admin/AuthContext";
 import { Analytics } from '@vercel/analytics/next';
 
 const geistSans = Geist({
@@ -14,11 +15,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-}); 
+});
 
 export const metadata: Metadata = {
   title: "Muhammad Chandra Ramadhan | Software & ML Engineer",
   description: "Personal portfolio of Muhammad Chandra Ramadhan, a Software and Machine Learning Engineer. Apple Developer Academy Graduate (Cohort 2025) and Google Student Ambassador 2025.",
+  alternates: {
+    canonical: "https://www.mchandrar.com/",
+  },
 };
 
 export default function RootLayout({
@@ -52,9 +56,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
       >
         <LanguageProvider>
-          <AIParticles />
-          <NavBar />
-          {children}
+          <AuthProvider>
+            <AIParticles />
+            <NavBar />
+            {children}
+          </AuthProvider>
         </LanguageProvider>
         <Analytics />
       </body>

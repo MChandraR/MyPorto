@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1086.0",
+    "@aws-sdk/s3-request-presigner": "^3.1086.0",
+    "mongodb": "^7.5.0",
     "@vercel/analytics": "^2.0.1",
     "next": "15.5.9",
     "react": "19.1.0",
